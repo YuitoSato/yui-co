@@ -1,8 +1,11 @@
 import hashlib
 import json
-import requests
-from time import time
 from urllib.parse import urlparse
+
+import requests
+
+from blockchain.block import Block
+from blockchain.blockchain_encoder import BlockChainEncoder
 
 
 class Blockchain(object):
@@ -14,13 +17,7 @@ class Blockchain(object):
         self.new_block(previous_hash=1, proof=100)
 
     def new_block(self, proof, previous_hash=None):
-        block = {
-            'index': len(self.chain) + 1,
-            'timestamp': time(),
-            'transactions': self.current_transactions,
-            'proof': proof,
-            'previous_hash': previous_hash or self.hash(self.chain[-1]),
-        }
+        block = Block(len(self.chain) + 1, self.current_transactions, proof, previous_hash or self.hash(self.chain[-1]))
 
         # Reset the current list of transactions
         self.current_transactions = []
@@ -34,7 +31,7 @@ class Blockchain(object):
             'recipient': recipient,
             'amount': amount,
         })
-        return self.last_block['index'] + 1
+        return self.last_block.index + 1
 
     def register_node(self, address):
         parsed_url = urlparse(address)
@@ -46,7 +43,7 @@ class Blockchain(object):
 
     @staticmethod
     def hash(block):
-        block_string = json.dumps(block, sort_keys=True).encode()
+        block_string = json.dumps(block, sort_keys=True, cls=BlockChainEncoder).encode()
         return hashlib.sha256(block_string).hexdigest()
 
     def proof_of_work(self, last_proof):
@@ -72,11 +69,11 @@ class Blockchain(object):
             print(f'{block}')
             print("\n-----------\n")
             # Check that the hash of the block is correct
-            if block['previous_hash'] != self.hash(last_block):
+            if block.previous_hash != self.hash(last_block):
                 return False
 
             # Check that the Proof of Work is correct
-            if not self.valid_proof(last_block['proof'], block['proof']):
+            if not self.valid_proof(last_block.proof, block.proof):
                 return False
 
             last_block = block
