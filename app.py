@@ -79,6 +79,7 @@ def register_nodes():
         return "Error: Please supply a valid list of nodes", 400
 
     for node in nodes:
+        print(node)
         blockchain.register_node(node)
 
     response = {
@@ -103,6 +104,14 @@ def consensus():
             'chain': blockchain.chain
         }
 
+    return jsonify(response), 200
+
+
+@app.route('/nodes', methods=['GET'])
+def full_nodes():
+    response = {
+        'nodes': blockchain.nodes
+    }
     return jsonify(response), 200
 
 

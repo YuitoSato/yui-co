@@ -64,10 +64,12 @@ class Blockchain(object):
 
         while current_index < len(chain):
             block = chain[current_index]
-            # print(f'{last_block}')
-            # print(f'{block}')
-            # print("\n-----------\n")
+            print(f'{last_block}')
+            print(f'{block}')
+
+            print("\n-----------\n")
             # Check that the hash of the block is correct
+            print(block.previous_hash)
             if block.previous_hash != self.hash(last_block):
                 return False
 
