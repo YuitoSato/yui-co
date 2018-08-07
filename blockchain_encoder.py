@@ -1,7 +1,7 @@
 from json import JSONEncoder
 
-from blockchain.block import Block
-from blockchain.transaction import Transaction
+from models.block import Block
+from models.transaction import Transaction
 
 
 class BlockChainEncoder(JSONEncoder):

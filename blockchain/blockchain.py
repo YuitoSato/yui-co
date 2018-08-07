@@ -4,9 +4,9 @@ from urllib.parse import urlparse
 
 import requests
 
-from blockchain.block import Block
+from models.block import Block
 from blockchain_encoder import BlockChainEncoder
-from blockchain.transaction import Transaction
+from models.transaction import Transaction
 
 
 class Blockchain(object):
