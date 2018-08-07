@@ -6,6 +6,7 @@ import requests
 
 from blockchain.block import Block
 from blockchain.blockchain_encoder import BlockChainEncoder
+from blockchain.transaction import Transaction
 
 
 class Blockchain(object):
@@ -26,11 +27,9 @@ class Blockchain(object):
         return block
 
     def new_transaction(self, sender, recipient, amount):
-        self.current_transactions.append({
-            'sender': sender,
-            'recipient': recipient,
-            'amount': amount,
-        })
+        transaction = Transaction(sender, recipient, amount)
+
+        self.current_transactions.append(transaction)
         return self.last_block.index + 1
 
     def register_node(self, address):
