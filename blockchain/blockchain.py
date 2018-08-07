@@ -5,7 +5,7 @@ from urllib.parse import urlparse
 import requests
 
 from blockchain.block import Block
-from blockchain.blockchain_encoder import BlockChainEncoder
+from blockchain_encoder import BlockChainEncoder
 from blockchain.transaction import Transaction
 
 

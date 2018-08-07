@@ -3,7 +3,7 @@ from uuid import uuid4
 from flask import Flask, jsonify, request
 
 from blockchain.blockchain import Blockchain
-from blockchain.blockchain_encoder import BlockChainEncoder
+from blockchain_encoder import BlockChainEncoder
 import sys
 
 app = Flask(__name__)
