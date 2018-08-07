@@ -4,6 +4,7 @@ from flask import Flask, jsonify, request
 
 from blockchain.blockchain import Blockchain
 from blockchain.blockchain_encoder import BlockChainEncoder
+import sys
 
 app = Flask(__name__)
 app.json_encoder = BlockChainEncoder
@@ -106,5 +107,9 @@ def consensus():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    port_arg = sys.argv[1]
 
+    if port_arg is not None:
+        app.run(host='0.0.0.0', port=int(port_arg))
+    else:
+        app.run(host='0.0.0.0', port=5000)

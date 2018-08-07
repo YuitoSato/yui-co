@@ -1,6 +1,7 @@
 from json import JSONEncoder
 
 from blockchain.block import Block
+from blockchain.transaction import Transaction
 
 
 class BlockChainEncoder(JSONEncoder):
@@ -12,4 +13,10 @@ class BlockChainEncoder(JSONEncoder):
                 'transactions': o.transactions,
                 'proof': o.proof,
                 'previous_hash': o.previous_hash,
+            }
+        if isinstance(o, Transaction):
+            return {
+                'sender': o.sender,
+                'recipient': o.recipient,
+                'amount': o.amount,
             }
